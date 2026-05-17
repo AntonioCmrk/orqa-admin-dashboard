@@ -1,0 +1,97 @@
+.user-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.user-modal {
+  width: 100%;
+  max-width: 520px;
+  padding: 24px;
+  background: var(--color-surface);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.24);
+}
+
+.user-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.user-modal__header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.user-modal__header button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #f3f4f6;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.user-modal__form {
+  display: grid;
+  gap: 16px;
+}
+
+.user-modal__form label {
+  display: grid;
+  gap: 8px;
+}
+
+.user-modal__form span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-modal__form input,
+.user-modal__form select {
+  height: 44px;
+  padding: 0 14px;
+  color: var(--color-text-primary);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  outline: none;
+}
+
+.user-modal__form input:focus,
+.user-modal__form select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+.user-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.user-modal__actions button {
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.user-modal__actions button:first-child {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.user-modal__actions button:last-child {
+  color: #fff;
+  background: var(--color-primary);
+  border: none;
+}

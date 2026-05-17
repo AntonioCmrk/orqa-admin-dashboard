@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import logo from "../../assets/logo.svg";
 import "./Sidebar.css";
 
 export function Sidebar() {
@@ -15,8 +16,8 @@ export function Sidebar() {
     <aside className="sidebar">
       <div>
         <div className="sidebar__brand">
-          <span className="sidebar__logo">O</span>
-          <span>Orqa Admin</span>
+          <img className="sidebar__logo" src={logo} alt="Orqa logo" />
+          <span>Orqa Admin Dashboard</span>
         </div>
 
         <nav className="sidebar__nav">

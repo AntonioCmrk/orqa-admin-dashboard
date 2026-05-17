@@ -1,0 +1,123 @@
+.users-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.users-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.users-table th {
+  padding: 14px 16px;
+  color: var(--color-text-secondary);
+  background: #f9fafb;
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.users-table td {
+  padding: 16px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.users-table__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-table__user strong {
+  color: var(--color-text-primary);
+}
+
+.users-table__avatar {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--color-primary);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.users-table__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.users-table__actions button {
+  padding: 8px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.users-table__delete {
+  color: var(--color-danger);
+}
+
+.badge,
+.status {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge--admin {
+  color: var(--color-primary);
+  background: rgba(79, 70, 229, 0.1);
+}
+
+.badge--editor {
+  color: #0369a1;
+  background: rgba(3, 105, 161, 0.1);
+}
+
+.badge--viewer {
+  color: var(--color-text-secondary);
+  background: #f3f4f6;
+}
+
+.status--active {
+  color: var(--color-success);
+  background: rgba(22, 163, 74, 0.1);
+}
+
+.status--inactive {
+  color: var(--color-text-secondary);
+  background: #f3f4f6;
+}
+
+.users-table__empty {
+  margin: 0;
+  padding: 32px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .users-table {
+    min-width: 680px;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 12px;
+  }
+}
