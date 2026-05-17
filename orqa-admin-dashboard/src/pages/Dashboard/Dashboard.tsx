@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StatCard } from "../../components/common/StatCard";
 import { useAuth } from "../../hooks/useAuth";
 import "./Dashboard.css";
@@ -18,6 +19,13 @@ const activities = [
 
 export function Dashboard() {
   const { user } = useAuth();
+  const [simulateError, setSimulateError] = useState(false);
+
+  if (simulateError) {
+    throw new Error(
+      "Failed to load dashboard analytics. Please try again later.",
+    );
+  }
 
   return (
     <div className="dashboard-page">
@@ -30,6 +38,21 @@ export function Dashboard() {
             metrics from one place.
           </p>
         </div>
+      </section>
+
+      <section className="dashboard-panel">
+        <div className="dashboard-panel__header">
+          <h3>Error Handling Demo</h3>
+          <span>Testing application robustness</span>
+        </div>
+
+        <button
+          className="dashboard-error-button"
+          type="button"
+          onClick={() => setSimulateError(true)}
+        >
+          Simulate Dashboard Error
+        </button>
       </section>
 
       <section className="dashboard-grid">

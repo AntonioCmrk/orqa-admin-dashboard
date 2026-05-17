@@ -1,0 +1,48 @@
+.error-fallback {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.error-fallback__card {
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px var(--color-shadow);
+}
+
+.error-fallback__eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-danger);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.error-fallback__card h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.error-fallback__message {
+  margin: 16px 0 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.error-fallback__card button {
+  margin-top: 28px;
+  height: 46px;
+  padding: 0 18px;
+  color: #fff;
+  background: var(--color-danger);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+}

@@ -1,16 +1,19 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { Footer } from "../../components/layout/Footer";
 import { Navbar } from "../../components/layout/Navbar";
 import { Sidebar } from "../../components/layout/Sidebar";
-import { Footer } from "../../components/layout/Footer";
 import "./AppLayout.css";
 
 export function AppLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       <div className="app-layout__main">
-        <Navbar />
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
 
         <main className="app-layout__content">
           <Outlet />

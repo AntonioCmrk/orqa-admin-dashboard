@@ -2,13 +2,17 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import "./Navbar.css";
 
+interface NavbarProps {
+  onMenuClick: () => void;
+}
+
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/users": "User Management",
   "/profile": "Profile Settings",
 };
 
-export function Navbar() {
+export function Navbar({ onMenuClick }: NavbarProps) {
   const location = useLocation();
   const { user } = useAuth();
 
@@ -21,6 +25,14 @@ export function Navbar() {
 
   return (
     <header className="navbar">
+      <button
+        className="navbar__menu"
+        type="button"
+        onClick={onMenuClick}
+        aria-label="Open navigation"
+      >
+        ☰
+      </button>
       <div>
         <p className="navbar__eyebrow">Admin Panel</p>
         <h1>{title}</h1>
