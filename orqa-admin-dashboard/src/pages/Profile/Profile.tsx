@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useToast } from "../../hooks/useToast";
 import "./Profile.css";
 
 export function Profile() {
   const { user } = useAuth();
+  const { showToast } = useToast();
 
   const [fullName, setFullName] = useState(user?.name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
@@ -26,6 +28,7 @@ export function Profile() {
 
     setIsSaving(false);
     setSuccessMessage("Profile settings updated successfully.");
+    showToast("Profile settings saved successfully.");
   }
 
   return (

@@ -4,6 +4,7 @@ import { UserModal } from "../../components/users/UserModal";
 import { UsersTable } from "../../components/users/UsersTable";
 import { useUsers } from "../../hooks/useUsers";
 import { DeleteConfirmationModal } from "../../components/users/DeleteConfirmationModal";
+import { useToast } from "../../hooks/useToast";
 import type { User } from "../../types/user";
 import "./Users.css";
 
@@ -22,6 +23,7 @@ export function Users() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   function handleAddUser() {
     setUserToEdit(null);
@@ -36,10 +38,12 @@ export function Users() {
   function handleSubmitUser(user: User) {
     if (userToEdit) {
       updateUser(user);
+      showToast("User updated successfully.");
       return;
     }
 
     addUser(user);
+    showToast("User created successfully.");
   }
 
   return (
@@ -84,6 +88,7 @@ export function Users() {
         onConfirm={() => {
           if (userToDelete) {
             deleteUser(userToDelete);
+            showToast("User deleted successfully.");
           }
 
           setUserToDelete(null);
