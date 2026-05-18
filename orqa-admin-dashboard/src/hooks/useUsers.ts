@@ -1,12 +1,33 @@
-import { useMemo, useReducer, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import { mockUsers } from '../data/mockUsers'
 import { usersReducer } from '../reducers/usersReducer'
 import type { User, UserRole } from '../types/user'
 
+const STORAGE_KEY = 'orqa-users'
+
+function getStoredUsers() {
+  const storedUsers = localStorage.getItem(STORAGE_KEY)
+
+  if (!storedUsers) {
+    return mockUsers
+  }
+
+  try {
+    return JSON.parse(storedUsers) as User[]
+  } catch {
+    localStorage.removeItem(STORAGE_KEY)
+    return mockUsers
+  }
+}
+
 export function useUsers() {
-  const [users, dispatch] = useReducer(usersReducer, mockUsers)
+  const [users, dispatch] = useReducer(usersReducer, undefined, getStoredUsers)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedRole, setSelectedRole] = useState<UserRole | 'All'>('All')
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(users))
+  }, [users])
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {

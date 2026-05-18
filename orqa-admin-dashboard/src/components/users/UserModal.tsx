@@ -47,8 +47,14 @@ export function UserModal({
   );
 }
 
-function UserModalForm({ userToEdit, onClose, onSubmit }: Omit<UserModalProps, "isOpen">) {
-  const [formData, setFormData] = useState(() => getInitialFormData(userToEdit));
+function UserModalForm({
+  userToEdit,
+  onClose,
+  onSubmit,
+}: Omit<UserModalProps, "isOpen">) {
+  const [formData, setFormData] = useState(() =>
+    getInitialFormData(userToEdit),
+  );
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,7 +73,7 @@ function UserModalForm({ userToEdit, onClose, onSubmit }: Omit<UserModalProps, "
         <div className="user-modal__header">
           <h2>{userToEdit ? "Edit user" : "Add user"}</h2>
           <button type="button" onClick={onClose}>
-            ×
+            x
           </button>
         </div>
 
