@@ -31,6 +31,15 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <img className="sidebar__logo" src={logo} alt="Orqa logo" />
 
             <span>Orqa Admin Dashboard</span>
+
+            <button
+              className="sidebar__close"
+              type="button"
+              onClick={onClose}
+              aria-label="Close navigation"
+            >
+              ×
+            </button>
           </div>
 
           <nav className="sidebar__nav">

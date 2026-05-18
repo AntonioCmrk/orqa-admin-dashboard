@@ -17,7 +17,7 @@
   padding: 32px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .app-layout__main {
     min-height: 100vh;
   }

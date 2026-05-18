@@ -2,12 +2,10 @@
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .users-table {
   width: 100%;
-  min-width: 760px;
   border-collapse: collapse;
 }
 
@@ -24,7 +22,6 @@
   padding: 16px;
   border-top: 1px solid var(--color-border);
   color: var(--color-text-secondary);
-  white-space: nowrap;
 }
 
 .users-table__user {
@@ -62,7 +59,6 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
   font-weight: 600;
-  white-space: nowrap;
 }
 
 .users-table__delete {
@@ -76,7 +72,6 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
-  white-space: nowrap;
 }
 
 .badge--admin {
@@ -112,12 +107,82 @@
 }
 
 @media (max-width: 768px) {
-  .users-table {
-    min-width: 680px;
+  .users-table-wrapper {
+    overflow-x: visible;
   }
 
+  .users-table,
+  .users-table thead,
+  .users-table tbody,
+  .users-table tr,
   .users-table th,
   .users-table td {
-    padding: 12px;
+    display: block;
+  }
+
+  .users-table thead {
+    display: none;
+  }
+
+  .users-table tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .users-table tr {
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-surface);
+  }
+
+  .users-table td {
+    padding: 10px 0;
+    border-top: none;
+  }
+
+  .users-table td:not(:first-child) {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .users-table td:nth-child(2)::before {
+    content: 'Email';
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+
+  .users-table td:nth-child(3)::before {
+    content: 'Role';
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+
+  .users-table td:nth-child(4)::before {
+    content: 'Status';
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+
+  .users-table td:nth-child(5) {
+    padding-top: 14px;
+  }
+
+  .users-table td:nth-child(5)::before {
+    content: '';
+  }
+
+  .users-table__user {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .users-table__actions {
+    justify-content: stretch;
+  }
+
+  .users-table__actions button {
+    flex: 1;
   }
 }

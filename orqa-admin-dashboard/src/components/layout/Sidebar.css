@@ -28,6 +28,10 @@
   object-fit: contain;
 }
 
+.sidebar__close {
+  display: none;
+}
+
 .sidebar__nav {
   display: grid;
   gap: 8px;
@@ -84,7 +88,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar-backdrop {
     position: fixed;
     inset: 0;
@@ -124,6 +128,35 @@
 
   .sidebar__brand {
     margin-bottom: 32px;
+  }
+
+  .sidebar__close {
+    margin-left: auto;
+
+    display: block;
+
+    padding: 0;
+
+    color: var(--color-text-primary);
+
+    background: transparent;
+
+    border: none;
+
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .sidebar__close:hover {
+    opacity: 0.7;
+    transform: scale(1.05);
   }
 
   .sidebar__nav {
