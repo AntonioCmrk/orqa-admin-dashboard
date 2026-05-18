@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import type { User, UserRole, UserStatus } from "../../types/user";
 import "./UserModal.css";
 
@@ -16,28 +16,39 @@ const emptyUser = {
   status: "Active" as UserStatus,
 };
 
+function getInitialFormData(userToEdit: User | null) {
+  if (!userToEdit) {
+    return emptyUser;
+  }
+
+  return {
+    name: userToEdit.name,
+    email: userToEdit.email,
+    role: userToEdit.role,
+    status: userToEdit.status,
+  };
+}
+
 export function UserModal({
   isOpen,
   userToEdit,
   onClose,
   onSubmit,
 }: UserModalProps) {
-  const [formData, setFormData] = useState(emptyUser);
-
-  useEffect(() => {
-    if (userToEdit) {
-      setFormData({
-        name: userToEdit.name,
-        email: userToEdit.email,
-        role: userToEdit.role,
-        status: userToEdit.status,
-      });
-    } else {
-      setFormData(emptyUser);
-    }
-  }, [userToEdit, isOpen]);
-
   if (!isOpen) return null;
+
+  return (
+    <UserModalForm
+      key={userToEdit?.id ?? "new-user"}
+      userToEdit={userToEdit}
+      onClose={onClose}
+      onSubmit={onSubmit}
+    />
+  );
+}
+
+function UserModalForm({ userToEdit, onClose, onSubmit }: Omit<UserModalProps, "isOpen">) {
+  const [formData, setFormData] = useState(() => getInitialFormData(userToEdit));
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

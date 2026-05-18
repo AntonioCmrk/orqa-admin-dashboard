@@ -11,10 +11,10 @@ const stats = [
 ];
 
 const activities = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing.",
-  "eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  "quis nostrud exercitation ullamco laboris nisi.",
-  "velit esse cillum dolore eu fugiat nulla pariatur.",
+  "New editor account created for the support team.",
+  "Three inactive users were reviewed this morning.",
+  "Admin permissions updated for workspace managers.",
+  "Pending invitations are ready for follow-up.",
 ];
 
 export function Dashboard() {

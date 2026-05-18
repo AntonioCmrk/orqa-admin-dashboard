@@ -1,22 +1,7 @@
-import {
-  createContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { useMemo, useState, type ReactNode } from "react";
+import { AuthContext } from "./AuthContextValue";
 import { loginRequest } from "../services/fakeApi";
 import type { AuthUser, LoginCredentials } from "../types/auth";
-
-interface AuthContextValue {
-  user: AuthUser | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
-  logout: () => void;
-}
-
-export const AuthContext = createContext<AuthContextValue | null>(null);
 
 const STORAGE_KEY = "orqa-auth";
 
@@ -25,20 +10,24 @@ interface StoredAuth {
   token: string;
 }
 
+function getStoredUser() {
+  const storedAuth = localStorage.getItem(STORAGE_KEY);
+
+  if (!storedAuth) {
+    return null;
+  }
+
+  try {
+    const parsedAuth = JSON.parse(storedAuth) as StoredAuth;
+    return parsedAuth.user;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const storedAuth = localStorage.getItem(STORAGE_KEY);
-
-    if (storedAuth) {
-      const parsedAuth = JSON.parse(storedAuth) as StoredAuth;
-      setUser(parsedAuth.user);
-    }
-
-    setIsLoading(false);
-  }, []);
+  const [user, setUser] = useState<AuthUser | null>(() => getStoredUser());
 
   async function login(credentials: LoginCredentials) {
     const response = await loginRequest(credentials);
@@ -63,11 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       user,
       isAuthenticated: Boolean(user),
-      isLoading,
+      isLoading: false,
       login,
       logout,
     }),
-    [user, isLoading],
+    [user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

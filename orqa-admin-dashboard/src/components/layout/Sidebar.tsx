@@ -38,7 +38,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               onClick={onClose}
               aria-label="Close navigation"
             >
-              ×
+              x
             </button>
           </div>
 
