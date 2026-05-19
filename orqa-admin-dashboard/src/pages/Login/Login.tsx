@@ -33,45 +33,51 @@ export function Login() {
 
   return (
     <main className="login-page">
-      <section className="login-card">
-        <div className="login-card__header">
-          <p className="login-card__eyebrow">Admin Dashboard</p>
-          <h1>Welcome back</h1>
-          <p>Sign in to continue managing your workspace.</p>
-        </div>
+      <div className="login-page__content">
+        <section className="login-card">
+          <div className="login-card__header">
+            <p className="login-card__eyebrow">Admin Dashboard</p>
+            <h1>Welcome back</h1>
+            <p>Sign in to continue managing your workspace.</p>
+          </div>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <label className="form-field">
-            <span>Email</span>
-            <input
-              type="email"
-              value={email}
-              placeholder="admin@orqa.com"
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </label>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <label className="form-field">
+              <span>Email</span>
+              <input
+                type="email"
+                value={email}
+                placeholder="admin@orqa.com"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </label>
 
-          <label className="form-field">
-            <span>Password</span>
-            <input
-              type="password"
-              value={password}
-              placeholder="Enter password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
+            <label className="form-field">
+              <span>Password</span>
+              <input
+                type="password"
+                value={password}
+                placeholder="Enter password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
 
-          {error && <p className="login-form__error">{error}</p>}
+            {error && <p className="login-form__error">{error}</p>}
 
-          <button
-            className="login-form__submit"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
-      </section>
+            <button
+              className="login-form__submit"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Signing in..." : "Sign in"}
+            </button>
+          </form>
+        </section>
+
+        <p className="login-demo">
+          Demo login: <strong>admin@orqa.com</strong> / <strong>password</strong>
+        </p>
+      </div>
     </main>
   );
 }

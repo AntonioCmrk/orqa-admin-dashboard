@@ -8,9 +8,12 @@
     var(--color-background);
 }
 
+.login-page__content {
+  width: min(100%, 420px);
+}
+
 .login-card {
   width: 100%;
-  max-width: 420px;
   padding: 40px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -84,6 +87,18 @@
   background: rgba(220, 38, 38, 0.08);
   border-radius: 10px;
   font-size: 14px;
+}
+
+.login-demo {
+  margin: 18px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-demo strong {
+  color: var(--color-text-primary);
+  font-weight: 700;
 }
 
 .login-form__submit {

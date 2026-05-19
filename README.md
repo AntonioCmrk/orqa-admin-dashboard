@@ -64,12 +64,12 @@ http://localhost:5173/
 
 ## Demo Login
 
-The mock login accepts any non-empty email and password. You can use:
+The mock login accepts only one email and password:
 
-```txt
-Email: admin@orqa.com
-Password: password
-```
+- Email: `admin@orqa.com`
+- Password: `password`
+
+Any other email or password shows a `Wrong email or password.` message on the login form.
 
 ## Project Structure
 
@@ -82,7 +82,7 @@ Password: password
 
 ## Known Limitations
 
-- Authentication is mocked and accepts any non-empty credentials.
+- Authentication is mocked and accepts only the demo credentials.
 - There is no real backend integration.
 - User changes are stored in memory and reset on refresh.
 - Automated tests are not included yet.
