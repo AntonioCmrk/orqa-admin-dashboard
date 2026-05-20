@@ -31,9 +31,11 @@ export function Navbar({ onMenuClick }: NavbarProps) {
         onClick={onMenuClick}
         aria-label="Open navigation"
       >
-        ☰
+        <span />
+        <span />
+        <span />
       </button>
-      <div>
+      <div className="navbar__title">
         <p className="navbar__eyebrow">Admin Panel</p>
         <h1>{title}</h1>
       </div>

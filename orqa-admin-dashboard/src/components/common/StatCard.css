@@ -1,9 +1,11 @@
 .stat-card {
   padding: 24px;
-  background: var(--color-surface);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, 0.07), transparent 58%),
+    var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px var(--color-shadow);
+  border-radius: 6px;
+  box-shadow: 0 18px 44px var(--color-shadow);
 }
 
 .stat-card p {
@@ -16,6 +18,7 @@
 .stat-card strong {
   display: block;
   margin-bottom: 8px;
+  color: #fff;
   font-size: 32px;
 }
 

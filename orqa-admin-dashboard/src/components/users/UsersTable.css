@@ -12,15 +12,17 @@
 .users-table th {
   padding: 14px 16px;
   color: var(--color-text-secondary);
-  background: #f9fafb;
+  background: rgba(255, 255, 255, 0.045);
   font-size: 13px;
   text-align: left;
   white-space: nowrap;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .users-table td {
   padding: 16px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border-soft);
   color: var(--color-text-secondary);
 }
 
@@ -41,10 +43,12 @@
   display: grid;
   place-items: center;
   color: #fff;
-  background: var(--color-primary);
-  border-radius: 50%;
+  background: linear-gradient(135deg, #7f1d1d, #ef4444);
+  border: 1px solid rgba(248, 113, 113, 0.32);
+  border-radius: 4px;
   font-size: 13px;
   font-weight: 800;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.2);
 }
 
 .users-table__actions {
@@ -55,48 +59,56 @@
 
 .users-table__actions button {
   padding: 8px 12px;
-  background: var(--color-surface);
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.045);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 600;
 }
 
 .users-table__delete {
-  color: var(--color-danger);
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.32);
 }
 
 .badge,
 .status {
   display: inline-flex;
   padding: 5px 10px;
-  border-radius: 999px;
+  border: 1px solid transparent;
+  border-radius: 4px;
   font-size: 12px;
   font-weight: 700;
 }
 
 .badge--admin {
-  color: var(--color-primary);
-  background: rgba(79, 70, 229, 0.1);
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(248, 113, 113, 0.24);
 }
 
 .badge--editor {
-  color: #0369a1;
-  background: rgba(3, 105, 161, 0.1);
+  color: #99f6e4;
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.24);
 }
 
 .badge--viewer {
   color: var(--color-text-secondary);
-  background: #f3f4f6;
+  background: rgba(255, 255, 255, 0.045);
+  border-color: var(--color-border-soft);
 }
 
 .status--active {
   color: var(--color-success);
-  background: rgba(22, 163, 74, 0.1);
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.24);
 }
 
 .status--inactive {
   color: var(--color-text-secondary);
-  background: #f3f4f6;
+  background: rgba(255, 255, 255, 0.045);
+  border-color: var(--color-border-soft);
 }
 
 .users-table__empty {
@@ -132,7 +144,7 @@
   .users-table tr {
     padding: 16px;
     border: 1px solid var(--color-border);
-    border-radius: 14px;
+    border-radius: 6px;
     background: var(--color-surface);
   }
 
@@ -175,7 +187,7 @@
 
   .users-table__user {
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border-soft);
   }
 
   .users-table__actions {

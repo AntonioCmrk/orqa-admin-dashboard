@@ -3,31 +3,90 @@ import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 import "./Profile.css";
 
+const STORAGE_KEY = "orqa-profile-settings";
+
+interface ProfileSettings {
+  fullName: string;
+  email: string;
+  timezone: string;
+  emailNotifications: boolean;
+  weeklyReports: boolean;
+  compactMode: boolean;
+}
+
+function getDefaultSettings(
+  user: ReturnType<typeof useAuth>["user"],
+): ProfileSettings {
+  return {
+    fullName: user?.name ?? "",
+    email: user?.email ?? "",
+    timezone: "Europe/Zagreb",
+    emailNotifications: true,
+    weeklyReports: false,
+    compactMode: false,
+  };
+}
+
+function getStoredSettings(
+  user: ReturnType<typeof useAuth>["user"],
+): ProfileSettings {
+  const defaultSettings = getDefaultSettings(user);
+  const storedSettings = localStorage.getItem(STORAGE_KEY);
+
+  if (!storedSettings) {
+    return defaultSettings;
+  }
+
+  try {
+    return {
+      ...defaultSettings,
+      ...(JSON.parse(storedSettings) as Partial<ProfileSettings>),
+    };
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return defaultSettings;
+  }
+}
+
 export function Profile() {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const initialSettings = getStoredSettings(user);
 
-  const [fullName, setFullName] = useState(user?.name ?? "");
-  const [email, setEmail] = useState(user?.email ?? "");
-  const [timezone, setTimezone] = useState("Europe/Zagreb");
+  const [fullName, setFullName] = useState(initialSettings.fullName);
+  const [email, setEmail] = useState(initialSettings.email);
+  const [timezone, setTimezone] = useState(initialSettings.timezone);
 
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [weeklyReports, setWeeklyReports] = useState(false);
-  const [compactMode, setCompactMode] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(
+    initialSettings.emailNotifications,
+  );
+  const [weeklyReports, setWeeklyReports] = useState(
+    initialSettings.weeklyReports,
+  );
+  const [compactMode, setCompactMode] = useState(initialSettings.compactMode);
 
   const [isSaving, setIsSaving] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    setSuccessMessage("");
     setIsSaving(true);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        fullName,
+        email,
+        timezone,
+        emailNotifications,
+        weeklyReports,
+        compactMode,
+      }),
+    );
+
     setIsSaving(false);
-    setSuccessMessage("Profile settings updated successfully.");
     showToast("Profile settings saved successfully.");
   }
 
@@ -77,7 +136,7 @@ export function Profile() {
               >
                 <option value="Europe/Zagreb">Europe/Zagreb</option>
                 <option value="Europe/London">Europe/London</option>
-                <option value="America/New_York">America/New_York</option>
+                <option value="America/New_York">America/New York</option>
               </select>
             </label>
           </div>
@@ -134,8 +193,6 @@ export function Profile() {
         </section>
 
         <div className="profile-form__footer">
-          <p className="profile-form__success">{successMessage || "\u00A0"}</p>
-
           <button type="submit" disabled={isSaving}>
             {isSaving ? "Saving..." : "Save Changes"}
           </button>

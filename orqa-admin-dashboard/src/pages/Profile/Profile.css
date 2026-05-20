@@ -5,10 +5,12 @@
 
 .profile-page__header {
   padding: 32px;
-  background: var(--color-surface);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, 0.14), transparent 54%),
+    var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
-  box-shadow: 0 8px 24px var(--color-shadow);
+  border-radius: 6px;
+  box-shadow: 0 18px 48px var(--color-shadow);
 }
 
 .profile-page__eyebrow {
@@ -22,6 +24,7 @@
 
 .profile-page__header h2 {
   margin: 0;
+  color: #fff;
   font-size: 32px;
 }
 
@@ -37,10 +40,12 @@
 
 .profile-card {
   padding: 24px;
-  background: var(--color-surface);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+    var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px var(--color-shadow);
+  border-radius: 6px;
+  box-shadow: 0 18px 44px var(--color-shadow);
 }
 
 .profile-card__header {
@@ -49,6 +54,7 @@
 
 .profile-card__header h3 {
   margin: 0;
+  color: #fff;
   font-size: 22px;
 }
 
@@ -75,6 +81,7 @@
 .profile-form__grid span {
   font-size: 14px;
   font-weight: 700;
+  color: #e2e8f0;
 }
 
 .profile-form__grid input,
@@ -82,16 +89,18 @@
   height: 46px;
   padding: 0 14px;
   color: var(--color-text-primary);
-  background: #fff;
+  background: rgba(11, 12, 18, 0.96);
   border: 1px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: 4px;
   outline: none;
 }
 
 .profile-form__grid input:focus,
 .profile-form__grid select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+  box-shadow:
+    0 0 0 3px rgba(239, 68, 68, 0.16),
+    0 0 24px rgba(239, 68, 68, 0.16);
 }
 
 .profile-preferences {
@@ -105,11 +114,13 @@
   gap: 14px;
   padding: 16px;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.035);
 }
 
 .profile-toggle input {
   margin-top: 4px;
+  accent-color: var(--color-primary);
 }
 
 .profile-toggle strong,
@@ -130,20 +141,28 @@
   gap: 16px;
 }
 
-.profile-form__success {
-  margin: 0;
-  color: var(--color-success);
-  font-weight: 700;
-}
-
 .profile-form__footer button {
   height: 46px;
   padding: 0 20px;
   color: #fff;
-  background: var(--color-primary);
-  border: none;
-  border-radius: 10px;
+  background: linear-gradient(90deg, #7f1d1d, #dc2626);
+  border: 1px solid rgba(248, 113, 113, 0.42);
+  border-radius: 4px;
   font-weight: 700;
+  box-shadow: 0 0 22px rgba(220, 38, 38, 0.22);
+}
+
+.profile-form__footer button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #991b1b, #ef4444);
+  border-color: rgba(248, 113, 113, 0.7);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.34);
+  transform: translateY(-1px);
+}
+
+.profile-form__footer button:active:not(:disabled) {
+  background: linear-gradient(90deg, #450a0a, #991b1b);
+  transform: translateY(0);
+  box-shadow: 0 0 14px rgba(127, 29, 29, 0.32);
 }
 
 .profile-form__footer button:disabled {
@@ -161,6 +180,10 @@
     font-size: 26px;
   }
 
+  .profile-card__header {
+    text-align: center;
+  }
+
   .profile-form__grid {
     grid-template-columns: 1fr;
   }
@@ -170,12 +193,12 @@
   }
 
   .profile-form__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 46px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 46px;
+  }
 
   .profile-form__footer button {
     width: 100%;
@@ -190,7 +213,7 @@
   .profile-page__header,
   .profile-card {
     padding: 20px;
-    border-radius: 14px;
+    border-radius: 6px;
   }
 
   .profile-toggle {

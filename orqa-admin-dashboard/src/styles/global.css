@@ -9,7 +9,10 @@ html {
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background: var(--color-background);
+  background:
+    radial-gradient(circle at 18% 10%, rgba(239, 68, 68, 0.16), transparent 28%),
+    radial-gradient(circle at 82% 4%, rgba(20, 184, 166, 0.1), transparent 24%),
+    linear-gradient(135deg, #07080d 0%, #151015 52%, #08090e 100%);
   color: var(--color-text-primary);
 }
 
@@ -20,8 +23,37 @@ textarea {
   font: inherit;
 }
 
+select {
+  color-scheme: dark;
+}
+
+select option {
+  color: var(--color-text-primary);
+  background: #0b0c12;
+}
+
 button {
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
+}
+
+button:not(:disabled) {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(239, 68, 68, 0.18),
+    0 0 28px rgba(239, 68, 68, 0.2);
 }
 
 a {

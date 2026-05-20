@@ -2,7 +2,7 @@
 
 A responsive admin dashboard built with React, TypeScript, and Vite.
 
-The project demonstrates a typical admin workflow with mock authentication, protected routes, user management, reusable UI components, error handling, toast notifications, and a responsive layout that works across desktop and mobile screens.
+The project demonstrates a typical admin workflow with mock authentication, protected routes, persisted user and profile settings, reusable UI components, error handling, toast notifications, and a responsive layout that works across desktop and mobile screens.
 
 ## Tech Stack
 
@@ -22,6 +22,7 @@ The project demonstrates a typical admin workflow with mock authentication, prot
 - Protected routes for authenticated users
 - Public route guard for the login page
 - Auth persistence using `localStorage`
+- Wrong email/password feedback on the login form
 
 ### Dashboard
 
@@ -36,6 +37,7 @@ The project demonstrates a typical admin workflow with mock authentication, prot
 - Search users by name or email
 - Filter users by role
 - Responsive table/card-style behavior for smaller screens
+- User data persistence using `localStorage`
 - Toast feedback after successful actions
 
 ### Profile Settings
@@ -43,7 +45,8 @@ The project demonstrates a typical admin workflow with mock authentication, prot
 - Editable profile information
 - Preference toggles
 - Simulated async save state
-- Success feedback
+- Profile settings persistence using `localStorage`
+- Toast feedback after saving
 
 ## Getting Started
 
@@ -84,5 +87,17 @@ Any other email or password shows a `Wrong email or password.` message on the lo
 
 - Authentication is mocked and accepts only the demo credentials.
 - There is no real backend integration.
-- User changes are stored in memory and reset on refresh.
+- Data is stored in browser `localStorage`, not on a backend server.
 - Automated tests are not included yet.
+
+### Priorities
+
+I prioritized authentication, protected routing, user management CRUD, responsive layout, error handling, and clean component organization.
+
+### Challenges
+
+The main challenge was keeping the UI responsive while maintaining a consistent custom visual style across all pages and components.
+
+### Future Improvements
+
+With more time, I would add automated tests, connect the app to a real backend API, improve form validation, and add role-based permissions.
