@@ -1,10 +1,12 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import type { User, UserRole, UserStatus } from "../../types/user";
+import { hasDuplicateEmail } from "../../utils/users";
 import "./UserModal.css";
 
 interface UserModalProps {
   isOpen: boolean;
   userToEdit: User | null;
+  existingUsers: User[];
   onClose: () => void;
   onSubmit: (user: User) => void;
 }
@@ -32,6 +34,7 @@ function getInitialFormData(userToEdit: User | null) {
 export function UserModal({
   isOpen,
   userToEdit,
+  existingUsers,
   onClose,
   onSubmit,
 }: UserModalProps) {
@@ -41,6 +44,7 @@ export function UserModal({
     <UserModalForm
       key={userToEdit?.id ?? "new-user"}
       userToEdit={userToEdit}
+      existingUsers={existingUsers}
       onClose={onClose}
       onSubmit={onSubmit}
     />
@@ -49,44 +53,111 @@ export function UserModal({
 
 function UserModalForm({
   userToEdit,
+  existingUsers,
   onClose,
   onSubmit,
 }: Omit<UserModalProps, "isOpen">) {
+  const nameInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState(() =>
     getInitialFormData(userToEdit),
   );
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  const validationErrors = useMemo(() => {
+    const errors: Partial<Record<keyof typeof formData, string>> = {};
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+
+    if (trimmedName.length < 2) {
+      errors.name = "Name must contain at least 2 characters.";
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      errors.email = "Enter a valid email address.";
+    } else if (
+      hasDuplicateEmail(existingUsers, trimmedEmail, userToEdit?.id)
+    ) {
+      errors.email = "A user with this email already exists.";
+    }
+
+    return errors;
+  }, [existingUsers, formData.email, formData.name, userToEdit?.id]);
+
+  const hasErrors = Object.keys(validationErrors).length > 0;
+
+  useEffect(() => {
+    nameInputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSubmitAttempted(true);
+
+    if (hasErrors) {
+      return;
+    }
 
     onSubmit({
       id: userToEdit?.id ?? crypto.randomUUID(),
       ...formData,
+      name: formData.name.trim(),
+      email: formData.email.trim().toLowerCase(),
     });
 
     onClose();
   }
 
   return (
-    <div className="user-modal-backdrop">
-      <section className="user-modal">
+    <div className="user-modal-backdrop" onMouseDown={onClose}>
+      <section
+        className="user-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="user-modal-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
         <div className="user-modal__header">
-          <h2>{userToEdit ? "Edit user" : "Add user"}</h2>
+          <h2 id="user-modal-title">{userToEdit ? "Edit user" : "Add user"}</h2>
           <button type="button" onClick={onClose}>
-            x
+            <span aria-hidden="true">x</span>
+            <span className="sr-only">Close modal</span>
           </button>
         </div>
 
-        <form className="user-modal__form" onSubmit={handleSubmit}>
+        <form className="user-modal__form" onSubmit={handleSubmit} noValidate>
           <label>
             <span>Name</span>
             <input
+              ref={nameInputRef}
               required
               value={formData.name}
+              aria-invalid={Boolean(submitAttempted && validationErrors.name)}
+              aria-describedby={
+                submitAttempted && validationErrors.name
+                  ? "user-name-error"
+                  : undefined
+              }
               onChange={(event) =>
                 setFormData({ ...formData, name: event.target.value })
               }
             />
+            {submitAttempted && validationErrors.name && (
+              <strong className="user-modal__error" id="user-name-error">
+                {validationErrors.name}
+              </strong>
+            )}
           </label>
 
           <label>
@@ -95,10 +166,21 @@ function UserModalForm({
               required
               type="email"
               value={formData.email}
+              aria-invalid={Boolean(submitAttempted && validationErrors.email)}
+              aria-describedby={
+                submitAttempted && validationErrors.email
+                  ? "user-email-error"
+                  : undefined
+              }
               onChange={(event) =>
                 setFormData({ ...formData, email: event.target.value })
               }
             />
+            {submitAttempted && validationErrors.email && (
+              <strong className="user-modal__error" id="user-email-error">
+                {validationErrors.email}
+              </strong>
+            )}
           </label>
 
           <label>
@@ -138,7 +220,7 @@ function UserModalForm({
             <button type="button" onClick={onClose}>
               Cancel
             </button>
-            <button type="submit">
+            <button type="submit" disabled={submitAttempted && hasErrors}>
               {userToEdit ? "Save changes" : "Create user"}
             </button>
           </div>

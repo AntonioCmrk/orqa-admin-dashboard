@@ -1,8 +1,11 @@
 import type { User } from "../../types/user";
+import type { UserSortConfig, UserSortKey } from "../../utils/users";
 import "./UsersTable.css";
 
 interface UsersTableProps {
   users: User[];
+  sortConfig: UserSortConfig;
+  onSort: (key: UserSortKey) => void;
   onEdit: (user: User) => void;
   onDelete: (userId: string) => void;
 }
@@ -15,9 +18,27 @@ function getInitials(name: string) {
     .toUpperCase();
 }
 
-export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
+const columns: Array<{ key: UserSortKey; label: string }> = [
+  { key: "name", label: "User" },
+  { key: "email", label: "Email" },
+  { key: "role", label: "Role" },
+  { key: "status", label: "Status" },
+];
+
+export function UsersTable({
+  users,
+  sortConfig,
+  onSort,
+  onEdit,
+  onDelete,
+}: UsersTableProps) {
   if (users.length === 0) {
-    return <p className="users-table__empty">No users found.</p>;
+    return (
+      <div className="users-table__empty">
+        <strong>No users found.</strong>
+        <span>Try changing the search term or role filter.</span>
+      </div>
+    );
   }
 
   return (
@@ -25,10 +46,31 @@ export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
       <table className="users-table">
         <thead>
           <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Status</th>
+            {columns.map((column) => (
+              <th key={column.key}>
+                <button
+                  type="button"
+                  className="users-table__sort"
+                  onClick={() => onSort(column.key)}
+                  aria-sort={
+                    sortConfig.key === column.key
+                      ? sortConfig.direction === "asc"
+                        ? "ascending"
+                        : "descending"
+                      : "none"
+                  }
+                >
+                  <span>{column.label}</span>
+                  <span aria-hidden="true">
+                    {sortConfig.key === column.key
+                      ? sortConfig.direction === "asc"
+                        ? "↑"
+                        : "↓"
+                      : "↕"}
+                  </span>
+                </button>
+              </th>
+            ))}
             <th aria-label="Actions" />
           </tr>
         </thead>

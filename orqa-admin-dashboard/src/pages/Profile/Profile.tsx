@@ -1,9 +1,11 @@
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 import "./Profile.css";
 
 const STORAGE_KEY = "orqa-profile-settings";
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface ProfileSettings {
   fullName: string;
@@ -66,9 +68,33 @@ export function Profile() {
   const [compactMode, setCompactMode] = useState(initialSettings.compactMode);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  const validationErrors = useMemo(() => {
+    const errors: Partial<Record<"fullName" | "email", string>> = {};
+    const trimmedFullName = fullName.trim();
+    const trimmedEmail = email.trim();
+
+    if (trimmedFullName.length < 2) {
+      errors.fullName = "Full name must contain at least 2 characters.";
+    }
+
+    if (!emailPattern.test(trimmedEmail)) {
+      errors.email = "Enter a valid email address.";
+    }
+
+    return errors;
+  }, [email, fullName]);
+
+  const hasValidationErrors = Object.keys(validationErrors).length > 0;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSubmitAttempted(true);
+
+    if (hasValidationErrors) {
+      return;
+    }
 
     setIsSaving(true);
 
@@ -77,8 +103,8 @@ export function Profile() {
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
-        fullName,
-        email,
+        fullName: fullName.trim(),
+        email: email.trim().toLowerCase(),
         timezone,
         emailNotifications,
         weeklyReports,
@@ -100,7 +126,7 @@ export function Profile() {
         <p>Manage your account information and application preferences.</p>
       </section>
 
-      <form className="profile-form" onSubmit={handleSubmit}>
+      <form className="profile-form" onSubmit={handleSubmit} noValidate>
         <section className="profile-card">
           <div className="profile-card__header">
             <h3>Personal Information</h3>
@@ -113,8 +139,25 @@ export function Profile() {
 
               <input
                 value={fullName}
+                required
+                aria-invalid={Boolean(
+                  submitAttempted && validationErrors.fullName,
+                )}
+                aria-describedby={
+                  submitAttempted && validationErrors.fullName
+                    ? "profile-full-name-error"
+                    : undefined
+                }
                 onChange={(event) => setFullName(event.target.value)}
               />
+              {submitAttempted && validationErrors.fullName && (
+                <strong
+                  className="profile-form__error"
+                  id="profile-full-name-error"
+                >
+                  {validationErrors.fullName}
+                </strong>
+              )}
             </label>
 
             <label>
@@ -123,8 +166,20 @@ export function Profile() {
               <input
                 type="email"
                 value={email}
+                required
+                aria-invalid={Boolean(submitAttempted && validationErrors.email)}
+                aria-describedby={
+                  submitAttempted && validationErrors.email
+                    ? "profile-email-error"
+                    : undefined
+                }
                 onChange={(event) => setEmail(event.target.value)}
               />
+              {submitAttempted && validationErrors.email && (
+                <strong className="profile-form__error" id="profile-email-error">
+                  {validationErrors.email}
+                </strong>
+              )}
             </label>
 
             <label>

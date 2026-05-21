@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { StatCard } from "../../components/common/StatCard";
+import { mockUsers } from "../../data/mockUsers";
 import { useAuth } from "../../hooks/useAuth";
+import { USERS_STORAGE_KEY } from "../../hooks/useUsers";
+import type { User } from "../../types/user";
+import { getUserStats } from "../../utils/users";
 import "./Dashboard.css";
-
-const stats = [
-  { label: "Total Users", value: "248", helperText: "+12% this month" },
-  { label: "Active Users", value: "196", helperText: "+8% this month" },
-  { label: "Admins", value: "12", helperText: "Stable" },
-  { label: "Pending Invites", value: "7", helperText: "Needs review" },
-];
 
 const activities = [
   "New editor account created for the support team.",
@@ -17,9 +14,47 @@ const activities = [
   "Pending invitations are ready for follow-up.",
 ];
 
+function getDashboardUsers(): User[] {
+  const storedUsers = localStorage.getItem(USERS_STORAGE_KEY);
+
+  if (!storedUsers) {
+    return mockUsers;
+  }
+
+  try {
+    return JSON.parse(storedUsers) as User[];
+  } catch {
+    return mockUsers;
+  }
+}
+
 export function Dashboard() {
   const { user } = useAuth();
   const [simulateError, setSimulateError] = useState(false);
+  const userStats = getUserStats(getDashboardUsers());
+
+  const stats = [
+    {
+      label: "Total Users",
+      value: String(userStats.totalUsers),
+      helperText: "Managed accounts",
+    },
+    {
+      label: "Active Users",
+      value: String(userStats.activeUsers),
+      helperText: "Ready to work",
+    },
+    {
+      label: "Admins",
+      value: String(userStats.admins),
+      helperText: "Elevated access",
+    },
+    {
+      label: "Inactive Users",
+      value: String(userStats.inactiveUsers),
+      helperText: "Needs review",
+    },
+  ];
 
   if (simulateError) {
     throw new Error(

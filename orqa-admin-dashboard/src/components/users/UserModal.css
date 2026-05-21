@@ -45,6 +45,17 @@
   line-height: 1;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .user-modal__form {
   display: grid;
   gap: 16px;
@@ -80,6 +91,16 @@
     0 0 24px rgba(239, 68, 68, 0.16);
 }
 
+.user-modal__form input[aria-invalid="true"] {
+  border-color: rgba(248, 113, 113, 0.74);
+}
+
+.user-modal__error {
+  color: #fecaca;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 .user-modal__actions {
   display: flex;
   justify-content: flex-end;
@@ -113,4 +134,9 @@
 
 .user-modal__actions button:last-child:active:not(:disabled) {
   background: linear-gradient(90deg, #450a0a, #991b1b);
+}
+
+.user-modal__actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }

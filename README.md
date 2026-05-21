@@ -39,6 +39,8 @@ The project demonstrates a typical admin workflow with mock authentication, prot
 - Responsive table/card-style behavior for smaller screens
 - User data persistence using `localStorage`
 - Toast feedback after successful actions
+- Sortable table columns
+- Duplicate email prevention and inline form validation
 
 ### Profile Settings
 
@@ -65,6 +67,28 @@ The Vite dev server will print the local URL in the terminal, usually:
 http://localhost:5173/
 ```
 
+## Quality Checks
+
+Run the same checks used before submission:
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+## Manual QA Checklist
+
+- Invalid login shows a clear form error after the simulated request.
+- Valid login redirects to the dashboard.
+- Logged-out users cannot access protected pages.
+- Logged-in users cannot access the login page.
+- Users can be created, edited, deleted, searched, filtered, and sorted.
+- Duplicate user emails are blocked with inline validation.
+- Dashboard stats reflect the stored user list.
+- The dashboard error demo shows the fallback UI and recovery action.
+- Sidebar navigation works on desktop and mobile widths.
+
 ## Demo Login
 
 The mock login accepts only one email and password:
@@ -88,7 +112,7 @@ Any other email or password shows a `Wrong email or password.` message on the lo
 - Authentication is mocked and accepts only the demo credentials.
 - There is no real backend integration.
 - Data is stored in browser `localStorage`, not on a backend server.
-- Automated tests are not included yet.
+- Automated tests focus on the highest-risk flows, not full end-to-end browser coverage.
 
 ### Priorities
 
@@ -100,4 +124,4 @@ The main challenge was keeping the UI responsive while maintaining a consistent 
 
 ### Future Improvements
 
-With more time, I would add automated tests, connect the app to a real backend API, improve form validation, and add role-based permissions.
+Future improvements could include connecting the dashboard to a real backend API, adding full end-to-end test coverage, expanding role-based permissions, and introducing richer audit/activity history.

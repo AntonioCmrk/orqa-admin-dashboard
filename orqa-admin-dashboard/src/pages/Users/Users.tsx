@@ -11,10 +11,13 @@ import "./Users.css";
 export function Users() {
   const {
     filteredUsers,
+    users,
     searchTerm,
     selectedRole,
+    sortConfig,
     setSearchTerm,
     setSelectedRole,
+    handleSortChange,
     addUser,
     updateUser,
     deleteUser,
@@ -64,12 +67,15 @@ export function Users() {
         <UserFilters
           searchTerm={searchTerm}
           selectedRole={selectedRole}
+          resultsCount={filteredUsers.length}
           onSearchChange={setSearchTerm}
           onRoleChange={setSelectedRole}
         />
 
         <UsersTable
           users={filteredUsers}
+          sortConfig={sortConfig}
+          onSort={handleSortChange}
           onEdit={handleEditUser}
           onDelete={setUserToDelete}
         />
@@ -78,6 +84,7 @@ export function Users() {
       <UserModal
         isOpen={isModalOpen}
         userToEdit={userToEdit}
+        existingUsers={users}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleSubmitUser}
       />
